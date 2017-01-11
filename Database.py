@@ -9,13 +9,17 @@ class Database(object):
         self.collection = self.database[collection]
 
     def show_all_entries(self):
-        return self.collection.find()
+        '''returns a list of all entries'''
+        entries = [entries for entries in self.collection.find()]
+        return entries
 
     def find(self,query):
-        return self.collection.find(query)
+        entries = [entries for entries in self.collection.find(query)]
+        return entries
 
     def find_one(self,query):
-        return self.collection.find_one(query)
+        entries = [entries for entries in self.collection.find(query)]
+        return entries[0]
 
     def insert(self,query):
         self.collection.insert(query)

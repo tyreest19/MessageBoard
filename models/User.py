@@ -23,9 +23,9 @@ class User(object):
             'posts_id': self.post_ids
         }
 
-    def create_post(self,subject,text,topic_title):
+    def create_post(self, text,topic_title):
         '''creates a post'''
-        post = Post(subject,text,topic_title,self.userID)
+        post = Post(text,topic_title,self.userID)
         post.upload_post()
         self.post_ids.append(post.post_id)
         self.users_database.update({'userID': self.userID}, self.json())

@@ -1,18 +1,20 @@
 {% extends "layout.html" %}
 {% block head %}
-    <title>Home Page</title>
+    <title>Topic Page</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="static/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheet.css') }}">
 {% endblock %}
 {% block content %}
-    <h1>Topics</h1>
-    {% for topic in topics %}
-    <a href="/topic/{{topic}}"><h1>{{topic}}</h1></a>
+    <h1>{{topic}} </h1>
+    {% for post in posts %}
+    {% if 'topic_title' in post and 'text' in post and 'user_id' in post %}
+    <h2>{{post['text']}}</h2>
+    <h2>{{post['user_id']}}</h2>
+    {% endif %}
     {% endfor %}
 {% endblock %}
-

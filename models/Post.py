@@ -3,8 +3,7 @@ from Database import Database
 
 class Post(object):
 
-    def __init__(self,subject,text,topic_title,user_id):
-        self.subject = subject
+    def __init__(self,text,topic_title,user_id):
         self.text = text
         self.topic_title = topic_title
         self.post_id = str(uuid.uuid4())
@@ -13,7 +12,6 @@ class Post(object):
 
     def json(self):
         return {
-            'subject': self.subject,
             'text': self.text,
             'topic_title': self.topic_title,
             'post_id': self.post_id,
