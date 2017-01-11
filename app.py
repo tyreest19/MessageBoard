@@ -6,12 +6,16 @@ from flask import render_template
 from models.User import User
 from pymongo import MongoClient
 
-app = Flask(__name__)
+app = Flask(__name__,static_url_path = '/static')
 users_database = Database('MessageBoard','users','mongodb://127.0.0.1:27017')
+posts_database = Database('MessageBoard', 'posts', 'mongodb://127.0.0.1:27017')
+
 
 @app.route('/')
 def home():
-    return 'lets get started'
+
+
+    return render_template('home_page.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
