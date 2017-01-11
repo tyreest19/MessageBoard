@@ -6,7 +6,7 @@ from flask import render_template
 from models.User import User
 from pymongo import MongoClient
 
-app = Flask(__name__,static_url_path = '/static')
+app = Flask(__name__, static_url_path='/static')
 users_database = Database('MessageBoard','users','mongodb://127.0.0.1:27017')
 posts_database = Database('MessageBoard', 'posts', 'mongodb://127.0.0.1:27017')
 
