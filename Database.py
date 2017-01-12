@@ -17,7 +17,9 @@ class Database(object):
         entries = [entries for entries in self.collection.find(query)]
         return entries
 
-    def find_one(self,query):
+    def find_one(self, query, verify_new_user=False):
+        if verify_new_user== True:
+            return self.collection.find_one(query)
         entries = [entries for entries in self.collection.find(query)]
         return entries[0]
 

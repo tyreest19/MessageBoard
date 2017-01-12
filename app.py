@@ -4,6 +4,7 @@ from flask import request
 from flask import Flask
 from flask import render_template
 from models.User import User
+from models.Post import Post
 from pymongo import MongoClient
 
 app = Flask(__name__, static_url_path='/static')
@@ -18,19 +19,25 @@ def home():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     '''registers user ADD: and if username and password is not unique it prompts the user to enter a new one'''
+    registered = True
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         new_user = User(username, password)
         if new_user.create_user():
             return redirect('/user/' + username) #CREAT LOGIN/LOGOUT SESSION WITH USER LATER ON
-    return render_template('registration_page.html')
+        registered = False
+    return render_template('registration_page.html', registered=registered)
 
 @app.route('/user/<username>')
 def username(username):
     '''shows user profile'''
     searched_for_account = {'username': username}
-    return str(users_database.find_one(searched_for_account))
+    searched_for_account = users_database.find_one(searched_for_account)
+    date_joined = searched_for_account['datejoined']
+    user_post = searched_for_account['posts_id']
+    return render_template('user_page.html', username=username, datejoined=date_joined, user_post=user_post
+                           , find_post=find_post)
 
 @app.route('/topic/<topic_title>')
 def topics(topic_title):
@@ -50,9 +57,19 @@ def grab_all_topics():
 
 def find_author(id):
     '''takes post id and query's the database to find the author of the post'''
+    print(id)
     author = users_database.find_one(id)
+    print(author)
     return author['username']
 
+def find_post(id):
+    return posts_database.find_one({'post_id':id})
+
+def load_post():
+    user = User("imnew19", 'new19')
+    user.create_user()
+    user.create_post('testing if post comes to user page2','testing if post goes to user19')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    load_post()
+    app.run()

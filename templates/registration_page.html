@@ -12,12 +12,17 @@
     <link rel="stylesheet" type="text/css" href="static/stylesheet.css">
 {% endblock %}
 {% block content %}
-  <form action="/register" method="post">
+  {% if registered == False %}
+  <p style="color:#b20000" align="center" style="padding:20px">The username or password you entered is already taken.</p>
+  {% endif %}
+  <h1 align="center" style="color:white">Sign Up</h1>
+  <form action="/register" method="post" align="center" style="padding:25px">
       UserName: <br>
       <input type="text" name="username"></br>
       Password: <br>
       <input type="text" name="password"></br>
-      <input type="submit" value="Execute">
+      <br><input type="submit" value="Execute"></br>
   </form>
+
 {% endblock %}
 </html>
