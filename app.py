@@ -36,7 +36,8 @@ def username(username):
 def topics(topic_title):
     '''shows posts for specific topic titles'''
     topic_title = topic_title.replace('%20',' ')
-    return render_template('topic_page.html', topic=topic_title, posts=posts_database.find({'topic_title':topic_title}))
+    return render_template('topic_page.html', topic=topic_title, posts=posts_database.find({'topic_title':topic_title})
+                            ,find_author =find_author)
 
 def grab_all_topics():
     '''Grabs all the topic titles in the post Database'''
@@ -46,6 +47,11 @@ def grab_all_topics():
             if post['topic_title'] not in topics:
                 topics.append(post['topic_title'])
     return topics
+
+def find_author(id):
+    '''takes post id and query's the database to find the author of the post'''
+    author = users_database.find_one(id)
+    return author['username']
 
 
 if __name__ == '__main__':

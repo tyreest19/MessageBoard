@@ -10,11 +10,13 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheet.css') }}">
 {% endblock %}
 {% block content %}
-    <h1>{{topic}} </h1>
+    <h1 align="center" style="color:white">{{topic}}</h1>
     {% for post in posts %}
     {% if 'topic_title' in post and 'text' in post and 'user_id' in post %}
-    <h2>{{post['text']}}</h2>
-    <h2>{{post['user_id']}}</h2>
+    <div id="post-layout" align="center" style="padding:25px">
+    <p class="text" style="color:white"  style="padding:15px">{{post['text']}}</p>
+    <p class="text" style="color:white" style="padding:10px">~By {{find_author({'userID':post['user_id']})}}</p>
+    </div>
     {% endif %}
     {% endfor %}
 {% endblock %}

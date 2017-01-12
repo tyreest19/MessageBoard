@@ -10,9 +10,9 @@
     <link rel="stylesheet" type="text/css" href="static/stylesheet.css">
 {% endblock %}
 {% block content %}
-    <h1>Topics</h1>
+    <h1 align="center" style="color:white">Click on Topics to see Related Post</h1>
     {% for topic in topics %}
-    <a href="/topic/{{topic}}"><h1>{{topic}}</h1></a>
+    <a href="/topic/{{topic}}"><h1 align="center" style="color:white">{{topic}}</h1></a>
     {% endfor %}
 {% endblock %}
 
