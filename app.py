@@ -97,9 +97,7 @@ def grab_all_topics():
 
 def find_author(id):
     '''takes post id and query's the database to find the author of the post'''
-    print(id)
     author = users_database.find_one(id)
-    print(author)
     return author['username']
 
 def find_post(id):
