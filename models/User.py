@@ -23,16 +23,16 @@ class User(object):
             'posts_id': self.post_ids
         }
 
-    def create_post(self, text, topic_title):
+    def create_post(self, text, topic_title, userID):
         '''creates a post'''
         orginal_info = self.json()
-        post = Post(text, topic_title, self.userID)
+        post = Post(text, topic_title, userID)
         post.upload_post()
         self.post_ids.append(post.post_id)
         print("post ids: ", self.post_ids)
         print('orginal json', orginal_info)
         print('new json', self.json())
-        self.users_database.update({'userID':self.userID}, self.json())
+        self.users_database.update({'userID':userID}, self.json())
 
     def delete_post(self,post_id):
         '''delete a user post\'s by the post\s and return true if the post was deleted'''

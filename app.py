@@ -1,13 +1,18 @@
 from Database import Database
+import os
+from flask_login import LoginManager
 from flask import redirect
 from flask import request
 from flask import Flask
 from flask import render_template
+from flask import session
 from models.User import User
 from models.Post import Post
 from pymongo import MongoClient
 
 app = Flask(__name__, static_url_path='/static')
+login_manager = LoginManager()
+login_manager.init_app(app)
 users_database = Database('MessageBoard','users','mongodb://127.0.0.1:27017')
 posts_database = Database('MessageBoard', 'posts', 'mongodb://127.0.0.1:27017')
 
@@ -46,6 +51,26 @@ def topics(topic_title):
     return render_template('topic_page.html', topic=topic_title, posts=posts_database.find({'topic_title':topic_title})
                             ,find_author =find_author)
 
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        validate_username = users_database.find_one({'username': username})
+        validate_password = users_database.find_one({'password': password})
+        if validate_password is not None and validate_username is not None:
+            session[username] = username
+            if username in session:
+                return redirect('/user/' + username)
+    return render_template('login_page.html')
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect('/')
+
+
 def grab_all_topics():
     '''Grabs all the topic titles in the post Database'''
     topics = []
@@ -65,11 +90,8 @@ def find_author(id):
 def find_post(id):
     return posts_database.find_one({'post_id':id})
 
-def load_post():
-    user = User("imnew19", 'new19')
-    user.create_user()
-    user.create_post('testing if post comes to user page2','testing if post goes to user19')
+
 
 if __name__ == '__main__':
-    load_post()
-    app.run()
+    app.secret_key = os.urandom(24)
+    app.run(debug=True)
