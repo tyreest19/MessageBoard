@@ -2,7 +2,7 @@
 <html>
 {% extends "layout.html" %}
 {% block head %}
-    <title>Login</title>
+    <title>Create Post</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -12,16 +12,19 @@
     <link rel="stylesheet" type="text/css" href="static/stylesheet.css">
 {% endblock %}
 {% block content %}
-  <h1 align="center" style="color:white">Login</h1>
-  {% if invalid_creditals == True %}
-  <p style="color:#b20000" align="center" style="padding:20px">username or password is invalid.</p>
-  {% endif %}
-  <form action="/login" method="post" align="center" style="padding:25px">
-      UserName: <br>
-      <input type="text" name="username"></br>
-      Password: <br>
-      <input type="text" name="password"></br>
-      <br><input type="submit" value="Login"></br>
-  </form>
+    <h1 align="center">Create Post</h1>
+    <form action="/createpost" method="post">
+    <div align="center">
+        <label> Title:</label>
+        <input type="text" name="title">
+    </div>
+    <div align="center">
+        <label  align="center">Content:</label>
+        <textarea id="msg" name="content"></textarea>
+    </div>
+        <div class="button"  align="center">
+        <button type="submit">Post</button>
+    </div>
+</form>
 {% endblock %}
 </html>

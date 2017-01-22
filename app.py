@@ -1,6 +1,7 @@
 from Database import Database
 import os
 from flask_login import LoginManager
+from flask import escape
 from flask import redirect
 from flask import request
 from flask import Flask
@@ -54,22 +55,36 @@ def topics(topic_title):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    invalid_creditals = False
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        validate_username = users_database.find_one({'username': username})
-        validate_password = users_database.find_one({'password': password})
+        validate_username = users_database.find_one({'username': username},True)
+        validate_password = users_database.find_one({'password': password},True)
         if validate_password is not None and validate_username is not None:
-            session[username] = username
-            if username in session:
-                return redirect('/user/' + username)
-    return render_template('login_page.html')
+            session['username'] = username
+            session['nickname'] = username
+            return redirect('/user/' + username)
+        invalid_creditals = True
+    return render_template('login_page.html',invalid_creditals=invalid_creditals)
 
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect('/')
 
+@app.route('/createpost', methods=['GET', 'POST'])
+def create_post():
+    if request.method == 'POST':
+        title = request.form['title']
+        content = request.form['content']
+        user = session['username']
+        user = users_database.find_one({'username':user})
+        post = Post(content,title,user['userID'])
+        post.upload_post()
+        user['posts_id'].append(post.post_id)
+        users_database.update({'username':user['username']}, user)
+    return render_template('create_post_page.html')
 
 def grab_all_topics():
     '''Grabs all the topic titles in the post Database'''
@@ -91,7 +106,6 @@ def find_post(id):
     return posts_database.find_one({'post_id':id})
 
 
-
 if __name__ == '__main__':
     app.secret_key = os.urandom(24)
-    app.run(debug=True)
+    app.run()

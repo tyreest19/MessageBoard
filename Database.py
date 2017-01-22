@@ -17,8 +17,8 @@ class Database(object):
         entries = [entries for entries in self.collection.find(query)]
         return entries
 
-    def find_one(self, query, verify_new_user=False):
-        if verify_new_user== True:
+    def find_one(self, query, verify_user=False):
+        if verify_user== True:
             return self.collection.find_one(query)
         entries = [entries for entries in self.collection.find(query)]
         return entries[0]
@@ -30,6 +30,7 @@ class Database(object):
         self.collection.delete_many(query)
 
     def update(self,id,updated_data):
+        # id must be a dictionary
         self.collection.update(id, updated_data, upsert=False)
 
 
