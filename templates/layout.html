@@ -14,9 +14,17 @@
     </div>
         <ul class="nav navbar-nav">
              <li><a href="/" class="color-me">Home</a></li>
+            {% if session.get('username') != None %}
+             <li><a href={{ "/user/" + session['username'] }} class="color-me">My Profile</a></li>
+            {% endif %}
             <li><a href="/login" class="color-me">Login</a></li>
+            {% if session.get('username') == None %}
             <li><a href="/register" class="color-me">Sign Up</a></li>
+            {% endif %}
+            {% if session.get('username') != None %}
+            <li><a href="/createpost" class="color-me">Create Post</a></li>
              <li><a href="/logout" class="color-me">Log Out</a></li>
+            {% endif %}
         </ul>
     </div>
   </nav>

@@ -84,6 +84,7 @@ def create_post():
         post.upload_post()
         user['posts_id'].append(post.post_id)
         users_database.update({'username':user['username']}, user)
+        return redirect('/topic/' + title)
     return render_template('create_post_page.html')
 
 def grab_all_topics():
