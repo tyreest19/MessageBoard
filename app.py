@@ -31,6 +31,7 @@ def register():
         password = request.form['password']
         new_user = User(username, password)
         if new_user.create_user():
+            session['username'] = username
             return redirect('/user/' + username) #CREAT LOGIN/LOGOUT SESSION WITH USER LATER ON
         registered = False
     return render_template('registration_page.html', registered=registered)
