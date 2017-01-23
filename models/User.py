@@ -52,8 +52,8 @@ class User(object):
 
     def unique_creditals(self):
         '''returns true if the username and password does not exist in the database'''
-        if (self.users_database.find_one({'username': self.username}, verify_new_user=True)  == None and
-                    self.users_database.find_one({'password': self.password}, verify_new_user=True) == None):
+        if (self.users_database.find_one({'username': self.username}, verify_user=True)  == None and
+                    self.users_database.find_one({'password': self.password}, verify_user=True) == None):
             print('you cleared the credital check')
             return True
         print('you failed the crediatal set')
