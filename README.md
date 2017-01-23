@@ -6,6 +6,7 @@ MessageBoard allows user to login and post how they feel
 - Allows users to view other users post
 - Allows user to Login, Logout, and Signup
 - Site layout changes when user logs in
+
 <a href="http://www.youtube.com/watch?v=aCI-_yBqbNk&t=1s">Example video</a>
 
 
