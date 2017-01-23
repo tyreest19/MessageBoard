@@ -87,6 +87,13 @@ def create_post():
         return redirect('/topic/' + title)
     return render_template('create_post_page.html')
 
+@app.route('/delete/<post_id>')
+def delete(post_id):
+    delted_post = posts_database.find_one({'post_id':post_id})
+    owner_of_post = users_database.find_one({'userID':delted_post['user_id']})
+    posts_database.delete({'post_id': post_id})
+    return redirect('/user/' + owner_of_post['username'])
+
 def grab_all_topics():
     '''Grabs all the topic titles in the post Database'''
     topics = []
@@ -102,7 +109,7 @@ def find_author(id):
     return author['username']
 
 def find_post(id):
-    return posts_database.find_one({'post_id':id})
+    return posts_database.find_one({'post_id':id},verify_user=True)
 
 
 if __name__ == '__main__':

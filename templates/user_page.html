@@ -21,7 +21,9 @@
     <div id="post-layout" align="center" style="padding:25px">
     <p class="text" style="color:white"  style="padding:25px">{{find_post(post)['text']}}</p>
     <p class="text" style="color:white" style="padding:10px">~By {{username}}</p>
-        <p class="text" style="color:white" style="padding:10px"> Delete</p>
+        {% if session.get('username') != None %}
+        <a href={{'/delete/' + find_post(post)['post_id']}} <p class="text" style="color:white" style="padding:10px"> Delete</p>
+        {% endif %}
     </div>
 {% endif %}
 {% endfor %}
